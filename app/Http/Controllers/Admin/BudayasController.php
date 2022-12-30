@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Budaya;
+use App\Models\budaya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,13 +17,15 @@ class budayasController extends Controller
 
         return view('backend.budaya.view', $data);
     }
-    public function budayasAdd(){
+    public function budayasAdd()
+    {
         return view('backend.budaya.add');
     }
 
-    public function budayasStore(Request $request){
+    public function budayasStore(Request $request)
+    {
         $this->validate($request, [
-            
+
             'nama_budaya'     => 'required',
             'lokasi'   => 'required',
             'outline'   => 'required',
@@ -35,7 +37,7 @@ class budayasController extends Controller
         $img->storeAs('public/images', $img->hashName());
 
         $data = budaya::create([
-            
+
             'nama_budaya'     => $request->nama_budaya,
             'lokasi'   => $request->lokasi,
             'outline'     => $request->outline,
@@ -43,36 +45,39 @@ class budayasController extends Controller
             'artikel'   => $request->artikel,
         ]);
         // dd($img->hashName());
-        if($data){
+        if ($data) {
             //redirect dengan pesan sukses
             return redirect()->route('backend.budaya.view')->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             //redirect dengan pesan error
             return redirect()->route('backend.budaya.view')->with(['error' => 'Data Gagal Disimpan!']);
         }
     }
-    public function budayasEdit($id){
+    public function budayasEdit($id)
+    {
         $editData = budaya::find($id);
-         return view('backend.budaya.edit', compact('editData'));
-     }
- 
- 
-     public function budayasUpdate(Request $request, $id){
-         $data = budaya::find($id);
-         $data -> nama_budaya=$request->nama_budaya;
-         $data -> lokasi=$request->lokasi;
-         $data -> outline=$request->outline;
-         $data -> gambar=$request->gambar;
-         $data -> artikel=$request->artikel;
- 
-         $data -> save();
- 
-         return redirect()->route('backend.budaya.view')->with('message','Data Berhasil Dirubah');
-     }
-     public function budayasDelete($id){
+        return view('backend.budaya.edit', compact('editData'));
+    }
+
+
+    public function budayasUpdate(Request $request, $id)
+    {
+        $data = budaya::find($id);
+        $data->nama_budaya = $request->nama_budaya;
+        $data->lokasi = $request->lokasi;
+        $data->outline = $request->outline;
+        $data->gambar = $request->gambar;
+        $data->artikel = $request->artikel;
+
+        $data->save();
+
+        return redirect()->route('backend.budaya.view')->with('message', 'Data Berhasil Dirubah');
+    }
+    public function budayasDelete($id)
+    {
         $deleteData = budaya::find($id);
-        $deleteData -> delete();
-        
-        return redirect()->route('backend.budaya.view')->with('message','Data Berhasil Dihapus');
+        $deleteData->delete();
+
+        return redirect()->route('backend.budaya.view')->with('message', 'Data Berhasil Dihapus');
     }
 }

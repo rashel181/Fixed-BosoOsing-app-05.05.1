@@ -18,7 +18,8 @@
                         <div class="col-lg-7 col-md-10">
                             @foreach ($allWisata as $wisata)
                                 <h1 class="display-2 text-white">{{ $wisata->nama_wisata }}</h1>
-                                <p class="text-white mt-0 mb-5">This is your read more page. qwertyuiop asdfg hjkl zxcv bnm
+                                <p class="text-white mt-0 mb-5">This is your read more page about
+                                    {{ $wisata->nama_wisata }}.
                                 </p>
                         </div>
                     </div>
